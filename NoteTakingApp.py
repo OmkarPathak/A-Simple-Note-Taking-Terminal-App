@@ -13,13 +13,13 @@ import argparse, pathlib, time, os, pymysql
 # Constants
 DB_TABLE = 'notes'
 
-def insertIntoDB(table, note):
+def insertIntoDB(note):
     # Open database connection
     connection = pymysql.connect('localhost', 'root', '8149omkar', 'notes')
     # prepare a cursor object using cursor() method
     cursor = connection.cursor()
     # Prepare SQL query to INSERT a record into the database.
-    insertQuery = 'INSERT INTO ' + table + '(note) VALUES ("' + note + '")'
+    insertQuery = 'INSERT INTO ' + DB_TABLE + '(note) VALUES ("' + note + '")'
     try:
        # Execute the SQL command
        cursor.execute(insertQuery)
@@ -31,13 +31,13 @@ def insertIntoDB(table, note):
     # disconnect from server
     connection.close()
 
-def readFromDB(table):
+def readFromDB():
     # Open database connection
     connect = pymysql.connect('localhost', 'root', '8149omkar', 'notes')
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to SELECT all records from the database.
-    sql = 'SELECT * FROM ' + table
+    sql = 'SELECT * FROM ' + DB_TABLE
     try:
        # Execute the SQL command
        cursor.execute(sql)
@@ -61,7 +61,7 @@ def readFromDB(table):
     # disconnect from server
     connect.close()
 
-def modifyData(table, idx, modifiedNote):
+def modifyData(idx, modifiedNote):
     # Open database connection
     connect = pymysql.connect('localhost', 'root', '8149omkar', 'notes')
     # prepare a cursor object using cursor() method
@@ -81,19 +81,41 @@ def modifyData(table, idx, modifiedNote):
     # disconnect from server
     connect.close()
 
+def deleteUsingID(idx):
+    # Open database connection
+    connect = pymysql.connect('localhost', 'root', '8149omkar', 'notes')
+    # prepare a cursor object using cursor() method
+    cursor = connect.cursor()
+    # Prepare SQL query to UPDATE records from the database.
+    sql = 'DELETE  FROM ' + DB_TABLE + ' WHERE id = ' + idx
+    try:
+       # Execute the SQL command
+       cursor.execute(sql)
+       # Commit your changes in the database
+       connect.commit()
+    except:
+       print ("Something went wrong try again")
+       # Rollback in case there is any error
+       connect.rollback()
+
+    # disconnect from server
+    connect.close()
+
 def argumentParser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-a', '--add_note', help = 'Add notes to the database', action = 'store')
-    parser.add_argument('-f', '--fetch_all', help = 'Fetch All Records from the database', action = 'store_true')
-    parser.add_argument('-u', '--update', nargs = '*', help = 'Fetch All Records from the database', action = 'store')
+    parser.add_argument('-f', '--fetch_all', help = 'Fetch all Records from the database', action = 'store_true')
+    parser.add_argument('-u', '--update', nargs = '*', help = 'Update a record from the database', action = 'store')
+    parser.add_argument('-d', '--delete', help = 'Delete a record from database', action = 'store')
     arg = parser.parse_args()
     if(arg.add_note):
-        insertIntoDB(DB_TABLE, arg.add_note)
+        insertIntoDB(arg.add_note)
     elif(arg.fetch_all):
-        readFromDB(DB_TABLE)
+        readFromDB()
     elif(arg.update):
-        # print(arg.update[0], arg.update[1])
-        modifyData(DB_TABLE, arg.update[0], arg.update[1])
+        modifyData(arg.update[0], arg.update[1])
+    elif(arg.delete):
+        deleteUsingID(arg.delete)
     else:
         print('Dude give some arguments! Type ArgumentParser -h for more details')
 
