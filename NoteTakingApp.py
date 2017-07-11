@@ -12,10 +12,13 @@ import argparse, pathlib, time, os, pymysql
 
 # Config
 DB_TABLE = 'notes'
+DB_HOST = 'localhost'
+DB_USER = 'root'
+DB_PASSWORD = '8149omkar'
 
 def insertIntoDB(note, tags):
     # Open database connection
-    connection = pymysql.connect('localhost', 'root', '8149omkar', 'notes')
+    connection = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
     # prepare a cursor object using cursor() method
     cursor = connection.cursor()
     # Prepare SQL query to INSERT a record into the database.
@@ -34,7 +37,7 @@ def insertIntoDB(note, tags):
 
 def readFromDB():
     # Open database connection
-    connect = pymysql.connect('localhost', 'root', '8149omkar', 'notes')
+    connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to SELECT all records from the database.
@@ -66,7 +69,7 @@ def readFromDB():
 
 def modifyData(idx, modifiedNote):
     # Open database connection
-    connect = pymysql.connect('localhost', 'root', '8149omkar', 'notes')
+    connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to UPDATE records from the database.
@@ -87,7 +90,7 @@ def modifyData(idx, modifiedNote):
 
 def deleteUsingID(idx):
     # Open database connection
-    connect = pymysql.connect('localhost', 'root', '8149omkar', 'notes')
+    connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to UPDATE records from the database.
@@ -108,7 +111,7 @@ def deleteUsingID(idx):
 
 def readTags():
     # Open database connection
-    connect = pymysql.connect('localhost', 'root', '8149omkar', 'notes')
+    connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to SELECT all records from the database.
@@ -131,7 +134,7 @@ def readTags():
 
 def updateTag(idx, modifiedTag):
     # Open database connection
-    connect = pymysql.connect('localhost', 'root', '8149omkar', 'notes')
+    connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to UPDATE records from the database.
@@ -150,6 +153,10 @@ def updateTag(idx, modifiedTag):
     # disconnect from server
     connect.close()
 
+def reminder(message, date):
+    with open('/home/omkarpathak/Documents/GITs/A-Simple-Note-Taking-Terminal-App/Schedules.txt','a') as outFile:
+        outFile.write(date + ' ' + message + '\n')
+
 def argumentParser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-a', '--add_note', nargs = '*', help = 'Add notes to the database', action = 'store')
@@ -158,7 +165,7 @@ def argumentParser():
     parser.add_argument('-d', '--delete', help = 'Delete a record from database', action = 'store')
     parser.add_argument('-rt', '--read_tags', help = 'Read all the available tags from database', action = 'store_true')
     parser.add_argument('-ut', '--update_tag', nargs = '*', help = 'Update a tag of a record from the database', action = 'store')
-
+    parser.add_argument('--reminder', nargs = '*', help = 'Set a reminder', action = 'store')
     arg = parser.parse_args()
 
     if(arg.add_note):
@@ -176,6 +183,8 @@ def argumentParser():
         readTags()
     elif(arg.update_tag):
         updateTag(arg.update_tag[0], arg.update_tag[1])
+    elif(arg.reminder):
+        reminder(arg.reminder[0], arg.reminder[1])
     else:
         print('Reading Data from Database..')
         readFromDB()
