@@ -156,6 +156,7 @@ def updateTag(idx, modifiedTag):
 def reminder(message, date):
     with open('/home/omkarpathak/Documents/GITs/A-Simple-Note-Taking-Terminal-App/Schedules.txt','a') as outFile:
         outFile.write(date + ' ' + message + '\n')
+    print('Reminder set Successfully')
 
 def argumentParser():
     parser = argparse.ArgumentParser()
@@ -173,18 +174,34 @@ def argumentParser():
             insertIntoDB(arg.add_note[0], arg.add_note[1])
         except IndexError:
             print('You have to give two values [NOTE, TAGS]')
+
     elif(arg.read_all):
         readFromDB()
+
     elif(arg.update):
-        modifyData(arg.update[0], arg.update[1])
+        try:
+            modifyData(arg.update[0], arg.update[1])
+        except:
+            print('You have to give two values [ID, MODIFIED TEXT]')
+
     elif(arg.delete):
         deleteUsingID(arg.delete)
+
     elif(arg.read_tags):
         readTags()
+
     elif(arg.update_tag):
-        updateTag(arg.update_tag[0], arg.update_tag[1])
+        try:
+            updateTag(arg.update_tag[0], arg.update_tag[1])
+        except:
+            print('You have to give two values [ID, MODIFIED TAG]')
+
     elif(arg.reminder):
-        reminder(arg.reminder[0], arg.reminder[1])
+        try:
+            reminder(arg.reminder[0], arg.reminder[1])
+        except:
+            print('You have to give two values [REMINDER TEXT, "DATE(dd-mm-yyyy) TIME(hh:ss)"]')
+
     else:
         print('Reading Data from Database..')
         readFromDB()
