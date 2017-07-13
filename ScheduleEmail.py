@@ -3,7 +3,7 @@ import getpass
 import base64
 
 def setPassword():
-    password = getpass.getpass('Enter your gmail password for sending mails: ')
+    password = getpass.getpass('Enter your Email password for sending mails: ')
     encryptedData = base64.b64encode(password.encode('utf-8'))
     with open('/home/omkarpathak/Documents/GITs/A-Simple-Note-Taking-Terminal-App/password.txt', 'wb') as password:
         password.write(encryptedData)
