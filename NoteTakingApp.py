@@ -14,7 +14,7 @@ import argparse, pathlib, time, os, pymysql
 DB_TABLE = 'notes'
 DB_HOST = 'localhost'
 DB_USER = 'root'
-DB_PASSWORD = '8149omkar'
+DB_PASSWORD = ''
 
 def insertIntoDB(note, tags):
     # Open database connection
