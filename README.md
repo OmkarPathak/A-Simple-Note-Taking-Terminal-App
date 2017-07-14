@@ -19,7 +19,7 @@ you have to download it fromm the PyPI. Execute the following command to install
 
 # Procedure:
 
-1. If you want to use the email feature, you will have to run the `ScheduleEmail.py` file. This file will ask you for your password of your Email ID. Also, this file will set the Cron Job to check the time after every single minute.
+1. If you want to use the email feature, you will have to run the `ScheduleEmail.py` file (You will have to run this file only at the beginning.). This file will ask you for your password of your Email ID (Password is saved in the file `password.txt` in the encrypted form). Also, this file will set the Cron Job to check the time after every single minute. When the date and time matches the one from the Schedules.txt file, you will get a reminder in the form of mail.
 
 2. Else, you can simply run the `NoteTakingApp.py` file. This app provides following options:
 
@@ -31,4 +31,4 @@ you have to download it fromm the PyPI. Execute the following command to install
 | -d id | Deletes a specific note based on its id|
 | -ut id 'Updated Tag in Quotes'| Updates an already existing tag of a note|
 | -rt | Read all the distinct tags from the database|
-| --reminder 'Date(dd-mm-yyyy) [SPACE] Time(hh:ss)' 'Note in Quotes'| This will set a reminder which will send an email at the specified time and day|
+| --reminder 'Note in Quotes' 'Date(dd-mm-yyyy) [SPACE] Time(hh:ss)' | This will set a reminder which will send an email at the specified time and day|
