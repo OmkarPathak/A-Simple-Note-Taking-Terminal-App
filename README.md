@@ -41,4 +41,4 @@ you have to download it fromm the PyPI. Execute the following command to install
 | **-rt** | Read all the distinct tags from the database|
 | **--reminder**  *'Note in Quotes'*  *'Date(dd-mm-yyyy) [SPACE] Time(hh:ss)'* | This will set a reminder which will send an email at the specified time and day|
 
-Built with ♥ by `Omkar Pathak <http://www.omkarpathak.in/>`
+Built with ♥ by [`Omkar Pathak`](http://www.omkarpathak.in/)
