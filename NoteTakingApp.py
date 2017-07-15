@@ -153,10 +153,52 @@ def updateTag(idx, modifiedTag):
     # disconnect from server
     connect.close()
 
+# function to set the reminder
 def reminder(message, date):
     with open('/home/omkarpathak/Documents/GITs/A-Simple-Note-Taking-Terminal-App/Schedules.txt','a') as outFile:
         outFile.write(date + ' ' + message + '\n')
     print('Reminder set Successfully')
+
+def readClean():
+    # Open database connection
+    connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
+    # prepare a cursor object using cursor() method
+    cursor = connect.cursor()
+    # Prepare SQL query to SELECT all records from the database.
+    readQuery = 'SELECT * FROM ' + DB_TABLE
+    try:
+       # Execute the SQL command
+       cursor.execute(readQuery)
+       # Fetch all the rows in a list of lists.
+       results = cursor.fetchall()
+       for row in simpleGenerator(results):
+           print(row)
+    except:
+       print ("Error: unable to fetch data")
+
+    # disconnect from server
+    connect.close()
+
+# function to generate a generator for seeing the notes
+def simpleGenerator(numbers):
+    i = 0
+    while True:
+        check = input('\nWanna see next note? (If yes, press y else n): ')
+        if check in ('Y', 'y') and len(numbers) > i:
+            os.system('clear')
+            yield printData(numbers[i])
+            i += 1
+        else:
+            print('Bye!')
+            break
+
+def printData(row):
+    print()
+    print('ID:', row[0])
+    print('Created At:', row[1])
+    print('Last Modified At:', row[2])
+    print('Note:', row[3])
+    print('Tag:', row[4])
 
 def argumentParser():
     parser = argparse.ArgumentParser()
@@ -167,6 +209,7 @@ def argumentParser():
     parser.add_argument('-rt', '--read_tags', help = 'Read all the available tags from database', action = 'store_true')
     parser.add_argument('-ut', '--update_tag', nargs = '*', help = 'Update a tag of a record from the database', action = 'store')
     parser.add_argument('--reminder', nargs = '*', help = 'Set a reminder', action = 'store')
+    parser.add_argument('-rc', '--read_clean', help = 'Fetch all Records one by one from the database', action = 'store_true')
     arg = parser.parse_args()
 
     if(arg.add_note):
@@ -201,6 +244,9 @@ def argumentParser():
             reminder(arg.reminder[0], arg.reminder[1])
         except:
             print('You have to give two values [REMINDER TEXT, "DATE(dd-mm-yyyy) TIME(hh:ss)"]')
+
+    elif(arg.read_clean):
+        readClean()
 
     else:
         print('Reading Data from Database..')
