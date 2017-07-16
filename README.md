@@ -3,9 +3,6 @@ A simple terminal note taking application using Python
 
 [![Python](https://img.shields.io/badge/Python-3.6-brightgreen.svg)](http://www.python.org/download/) [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)]()
 
-[Omkar Pathak](http://www.omkarpathak.in),<br />
-Pune, Maharashtra, India.<br />
-
 # Features:
 
 * Simple command line application.
@@ -25,6 +22,8 @@ you have to download it fromm the PyPI. Execute the following command to install
 * For scheduling emails, you will need to assign the schedule using Crontabs. You can do it manually, but I had used Python-Crontab module to do the job. You can install by:<br />
 `pip3 install python-crontab`
 
+* For sending mails via Python, you will first have to change Gmail settings to receive mails via Python. This can be done by visiting the following url and turning the option on: `https://myaccount.google.com/lesssecureapps?pli=1`
+
 # Procedure:
 
 1. If you want to use the email feature, you will have to run the `ScheduleEmail.py` file (You will have to run this file only at the beginning.). This file will ask you for your password of your Email ID (Password is saved in the file `password.txt` in the encrypted form). Also, this file will set the Cron Job to check the time after every single minute. When the date and time matches the one from the Schedules.txt file, you will get a reminder in the form of mail.
@@ -35,6 +34,7 @@ you have to download it fromm the PyPI. Execute the following command to install
 | --- | --- |
 | **-a**  *'New Note in Quotes'* *'Tag in Quotes'* | Adds a new note to the Database |
 | **-r** | To read all the notes from the database |
+| **-rc** | To read all the notes from the database (One by one) |
 | **-u**  *[id]*  *'Updated Note in quotes'* | Updates an already stored note in the database based on id |
 | **-d**  *[id]* | Deletes a specific note based on its id|
 | **-ut**  *[id]*  *'Updated Tag in Quotes'*| Updates an already existing tag of a note|
