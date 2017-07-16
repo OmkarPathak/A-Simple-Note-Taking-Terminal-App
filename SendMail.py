@@ -1,6 +1,6 @@
 # A helper function for sending emails
 import datetime
-import base64
+import base64, os
 
 def sendMail(Message):
 	import smtplib
@@ -8,7 +8,7 @@ def sendMail(Message):
 	tadd = 'omkarpathak.comp@mmcoe.edu.in'         # receiver's email address
 	msg = Message                                  # Message to be sent!
 	username = 'omkarpathak.comp@mmcoe.edu.in'     # Your username(email ID)
-	with open('/home/omkarpathak/Documents/GITs/A-Simple-Note-Taking-Terminal-App/password.txt', 'rb') as password:
+	with open(os.path.dirname(os.path.abspath(__file__)) + '/password.txt', 'rb') as password:
 		encryptedData = password.read()
 		password = base64.b64decode(encryptedData) # Your encrypted password for above email ID
 	server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -18,7 +18,7 @@ def sendMail(Message):
 	server.sendmail(fadd,tadd,msg)
 	server.close()
 
-with open('/home/omkarpathak/Documents/GITs/A-Simple-Note-Taking-Terminal-App/Schedules.txt','r') as outFile:
+with open(os.path.dirname(os.path.abspath(__file__)) + '/Schedules.txt','r') as outFile:
     result = outFile.read().split('\n')
     for results in result:
         try:
