@@ -42,7 +42,7 @@ you have to download it from the PyPI. Execute the following command to install 
 | **--reminder**  *'Note in Quotes'*  *'Date(dd-mm-yyyy) [SPACE] Time(hh:ss)'* | This will set a reminder which will send an email at the specified time and day|
 
 
-![](Results/NoteTakingAppResult.gif)
+![](Results/NoteTakinAppResult.gif)
 
 
 Built with ♥ by [`Omkar Pathak`](http://www.omkarpathak.in/)
