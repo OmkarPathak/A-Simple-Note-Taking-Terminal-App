@@ -26,9 +26,22 @@ you have to download it from the PyPI. Execute the following command to install 
 
 # Procedure:
 
-1. If you want to use the email feature, you will have to run the `ScheduleEmail.py` file (You will have to run this file only at the beginning.). This file will ask you for your password of your Email ID (Password is saved in the file `password.txt` in the encrypted form). Also, this file will set the Cron Job to check the time after every single minute. When the date and time matches the one from the Schedules.txt file, you will get a reminder in the form of mail.
+1. First and the most important step is to create a database for storing our notes. I have used MySQL due to its simplicity, but you can use any database you are comfortable. Just ensure to change the code accordingly. For creating our table, first make a database and then just copy and paste the following schema. This will create a table named **notes** in your database.
+```mysql
 
-2. Else, you can simply run the `NoteTakingApp.py` file. This app provides following options:
+CREATE TABLE `mytable` (
+`id` INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+`created` TIMESTAMP DEFAULT '0000-00-00 00:00:00',
+`updated` TIMESTAMP DEFAULT now() ON UPDATE now(),
+`note` VARCHAR(255),
+`tags` VARCHAR(200)
+);
+
+```
+
+2. If you want to use the email feature, you will have to run the `ScheduleEmail.py` file (You will have to run this file only at the beginning.). This file will ask you for your password of your Email ID (Password is saved in the file `password.txt` in the encrypted form). Also, this file will set the Cron Job to check the time after every single minute. When the date and time matches the one from the Schedules.txt file, you will get a reminder in the form of mail.
+
+3. Else, you can simply run the `NoteTakingApp.py` file. This app provides following options:
 
 | Options | Description |
 | --- | --- |
