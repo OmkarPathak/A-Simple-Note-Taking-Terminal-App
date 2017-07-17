@@ -14,7 +14,7 @@ A simple terminal note taking application using Python
 # Requirements:
 
 * For database connectivity, I have used `pymysql` Python module. This module is not a built-in and hence
-you have to download it fromm the PyPI. Execute the following command to install pymysql:<br />
+you have to download it from the PyPI. Execute the following command to install pymysql:<br />
 `pip3 install pymysql`
 
 * For sending emails you will need the built-in `smtplib`
@@ -40,5 +40,9 @@ you have to download it fromm the PyPI. Execute the following command to install
 | **-ut**  *[id]*  *'Updated Tag in Quotes'*| Updates an already existing tag of a note|
 | **-rt** | Read all the distinct tags from the database|
 | **--reminder**  *'Note in Quotes'*  *'Date(dd-mm-yyyy) [SPACE] Time(hh:ss)'* | This will set a reminder which will send an email at the specified time and day|
+
+
+![](Results/NoteTakingAppResult.gif)
+
 
 Built with ♥ by [`Omkar Pathak`](http://www.omkarpathak.in/)
