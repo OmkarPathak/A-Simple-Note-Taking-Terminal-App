@@ -29,7 +29,7 @@ you have to download it from the PyPI. Execute the following command to install 
 1. First and the most important step is to create a database for storing our notes. I have used MySQL due to its simplicity, but you can use any database you are comfortable. Just ensure to change the code accordingly. For creating our table, first make a database and then just copy and paste the following schema. This will create a table named **notes** in your database.
 ```mysql
 
-CREATE TABLE `mytable` (
+CREATE TABLE `notes` (
 `id` INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `created` TIMESTAMP DEFAULT '0000-00-00 00:00:00',
 `updated` TIMESTAMP DEFAULT now() ON UPDATE now(),
