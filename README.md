@@ -1,7 +1,7 @@
 # A-Simple-Note-Taking-Terminal-App
 A simple terminal note taking application using Python
 
-[![Python](https://img.shields.io/badge/Python-3.6-brightgreen.svg)](http://www.python.org/download/) [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)]
+[![Python](https://img.shields.io/badge/Python-3.6-brightgreen.svg)](http://www.python.org/download/) [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)](www.omkarpathak.in)
 
 # Features:
 
