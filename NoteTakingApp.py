@@ -5,7 +5,8 @@
 # `id` INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
 # `created` TIMESTAMP DEFAULT '0000-00-00 00:00:00',
 # `updated` TIMESTAMP DEFAULT now() ON UPDATE now(),
-# `myfield` VARCHAR(255)
+# `note` VARCHAR(255),
+# `tags` VARCHAR(200)
 # );
 
 import argparse, pathlib, time, os, pymysql
@@ -189,7 +190,7 @@ def simpleGenerator(numbers):
             yield printData(numbers[i])
             i += 1
         else:
-            print('Bye!')
+            print('Done!')
             break
 
 def printData(row):
@@ -199,6 +200,38 @@ def printData(row):
     print('Last Modified At:', row[2])
     print('Note:', row[3])
     print('Tag:', row[4])
+    return
+
+def searchUsingTags(pattern):
+    # Open database connection
+    connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
+    # prepare a cursor object using cursor() method
+    cursor = connect.cursor()
+    # Prepare SQL query to SELECT all records from the database.
+    searchNoteUsingTagQuery = 'SELECT * FROM ' + DB_TABLE + ' WHERE tags LIKE "%' + pattern + '%"'
+    try:
+       # Execute the SQL command
+       cursor.execute(searchNoteUsingTagQuery)
+       # Fetch all the rows in a list of lists.
+       results = cursor.fetchall()
+       for row in results:
+          ID = row[0]
+          createdAt = row[1]
+          modifiedAt = row[2]
+          Note = row[3]
+          Tag = row[4]
+
+          print()
+          print('ID:', ID)
+          print('Created At:', createdAt)
+          print('Last Modified At:', modifiedAt)
+          print('Note:', Note)
+          print('Tag:', Tag)
+    except:
+       print ("Error: unable to fetch data")
+
+    # disconnect from server
+    connect.close()
 
 def argumentParser():
     parser = argparse.ArgumentParser()
@@ -210,6 +243,7 @@ def argumentParser():
     parser.add_argument('-ut', '--update_tag', nargs = '*', help = 'Update a tag of a record from the database', action = 'store')
     parser.add_argument('--reminder', nargs = '*', help = 'Set a reminder', action = 'store')
     parser.add_argument('-rc', '--read_clean', help = 'Fetch all Records one by one from the database', action = 'store_true')
+    parser.add_argument('-st', '--search_using_tags', help = 'Search notes based on tags', action = 'store')
     arg = parser.parse_args()
 
     if(arg.add_note):
@@ -247,6 +281,9 @@ def argumentParser():
 
     elif(arg.read_clean):
         readClean()
+
+    elif(arg.search_using_tags):
+        searchUsingTags(arg.search_using_tags)
 
     else:
         print('Reading Data from Database..')
