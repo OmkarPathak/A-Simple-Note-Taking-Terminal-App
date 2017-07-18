@@ -1,7 +1,7 @@
 # A-Simple-Note-Taking-Terminal-App
 A simple terminal note taking application using Python
 
-[![Python](https://img.shields.io/badge/Python-3.6-brightgreen.svg)](http://www.python.org/download/) [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)]()
+[![Python](https://img.shields.io/badge/Python-3.6-brightgreen.svg)](http://www.python.org/download/) [![Travis](https://img.shields.io/travis/rust-lang/rust.svg)]
 
 # Features:
 
@@ -27,6 +27,7 @@ you have to download it from the PyPI. Execute the following command to install 
 # Procedure:
 
 1. First and the most important step is to create a database for storing our notes. I have used MySQL due to its simplicity, but you can use any database you are comfortable. Just ensure to change the code accordingly. For creating our table, first make a database and then just copy and paste the following schema. This will create a table named **notes** in your database.
+
 ```mysql
 
 CREATE TABLE `notes` (
@@ -52,6 +53,7 @@ CREATE TABLE `notes` (
 | **-d**  *[id]* | Deletes a specific note based on its id|
 | **-ut**  *[id]*  *'Updated Tag in Quotes'*| Updates an already existing tag of a note|
 | **-rt** | Read all the distinct tags from the database|
+| **-st** *'Tag with which note is to be searched in Quotes'* | Search notes using tags|
 | **--reminder**  *'Note in Quotes'*  *'Date(dd-mm-yyyy) [SPACE] Time(hh:ss)'* | This will set a reminder which will send an email at the specified time and day|
 
 
