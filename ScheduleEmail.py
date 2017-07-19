@@ -2,14 +2,14 @@ from crontab import CronTab
 import getpass, os
 import base64
 
-def setPassword():
+def set_password():
     password = getpass.getpass('Enter your Email password for sending mails: ')
     encryptedData = base64.b64encode(password.encode('utf-8'))
     with open(os.path.dirname(os.path.abspath(__file__)) + '/password.txt', 'wb') as password:
         password.write(encryptedData)
 
 if __name__ == '__main__':
-    setPassword()
+    set_password()
     # Get the crontab file for specific user. Type your username here
     my_cron = CronTab(user='omkarpathak')
     # Creating a new cron job
