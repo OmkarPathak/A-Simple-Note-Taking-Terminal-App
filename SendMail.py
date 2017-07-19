@@ -2,7 +2,7 @@
 import datetime
 import base64, os
 
-def sendMail(Message):
+def send_mail(Message):
 	import smtplib
 	fadd = 'omkarpathak.comp@mmcoe.edu.in'         # sender's email address
 	tadd = 'omkarpathak.comp@mmcoe.edu.in'         # receiver's email address
@@ -15,7 +15,7 @@ def sendMail(Message):
 	server.ehlo()
 	server.starttls()
 	server.login(username, password.decode('utf-8'))
-	server.sendmail(fadd,tadd,msg)
+	server.send_mail(fadd,tadd,msg)
 	server.close()
 
 with open(os.path.dirname(os.path.abspath(__file__)) + '/Schedules.txt','r') as outFile:
@@ -33,6 +33,6 @@ with open(os.path.dirname(os.path.abspath(__file__)) + '/Schedules.txt','r') as 
             # print(res, now)
             if res == now:
                 message = ' '.join(Message)
-                sendMail(message)
+                send_mail(message)
         except IndexError:
             pass
