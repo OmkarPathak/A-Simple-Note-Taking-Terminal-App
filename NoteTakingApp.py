@@ -17,7 +17,7 @@ DB_HOST = 'localhost'
 DB_USER = 'root'
 DB_PASSWORD = ''
 
-def insertIntoDB(note, tags):
+def insert_into_db(note, tags):
     # Open database connection
     connection = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
     # prepare a cursor object using cursor() method
@@ -36,7 +36,7 @@ def insertIntoDB(note, tags):
     # disconnect from server
     connection.close()
 
-def readFromDB():
+def read_from_db():
     # Open database connection
     connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
     # prepare a cursor object using cursor() method
@@ -68,7 +68,7 @@ def readFromDB():
     # disconnect from server
     connect.close()
 
-def modifyData(idx, modifiedNote):
+def modify_data(idx, modifiedNote):
     # Open database connection
     connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
     # prepare a cursor object using cursor() method
@@ -89,7 +89,7 @@ def modifyData(idx, modifiedNote):
     # disconnect from server
     connect.close()
 
-def deleteUsingID(idx):
+def delete_using_id(idx):
     # Open database connection
     connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
     # prepare a cursor object using cursor() method
@@ -110,7 +110,7 @@ def deleteUsingID(idx):
     # disconnect from server
     connect.close()
 
-def readTags():
+def read_tags():
     # Open database connection
     connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
     # prepare a cursor object using cursor() method
@@ -133,7 +133,7 @@ def readTags():
     # disconnect from server
     connect.close()
 
-def updateTag(idx, modifiedTag):
+def update_tag(idx, modifiedTag):
     # Open database connection
     connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
     # prepare a cursor object using cursor() method
@@ -160,7 +160,7 @@ def reminder(message, date):
         outFile.write(date + ' ' + message + '\n')
     print('Reminder set Successfully')
 
-def readClean():
+def read_clean():
     # Open database connection
     connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
     # prepare a cursor object using cursor() method
@@ -172,7 +172,7 @@ def readClean():
        cursor.execute(readQuery)
        # Fetch all the rows in a list of lists.
        results = cursor.fetchall()
-       for row in simpleGenerator(results):
+       for row in simple_generator(results):
            print(row)
     except:
        print ("Error: unable to fetch data")
@@ -181,19 +181,19 @@ def readClean():
     connect.close()
 
 # function to generate a generator for seeing the notes
-def simpleGenerator(numbers):
+def simple_generator(numbers):
     i = 0
     while True:
         check = input('\nWanna see next note? (If yes, press y else n): ')
         if check in ('Y', 'y') and len(numbers) > i:
             os.system('clear')
-            yield printData(numbers[i])
+            yield print_data(numbers[i])
             i += 1
         else:
             print('Done!')
             break
 
-def printData(row):
+def print_data(row):
     print()
     print('ID:', row[0])
     print('Created At:', row[1])
@@ -202,7 +202,7 @@ def printData(row):
     print('Tag:', row[4])
     return
 
-def searchUsingTags(pattern):
+def search_using_tags(pattern):
     # Open database connection
     connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
     # prepare a cursor object using cursor() method
@@ -248,28 +248,28 @@ def argumentParser():
 
     if(arg.add_note):
         try:
-            insertIntoDB(arg.add_note[0], arg.add_note[1])
+            insert_into_db(arg.add_note[0], arg.add_note[1])
         except IndexError:
             print('You have to give two values [NOTE, TAGS]')
 
     elif(arg.read_all):
-        readFromDB()
+        read_from_db()
 
     elif(arg.update):
         try:
-            modifyData(arg.update[0], arg.update[1])
+            modify_data(arg.update[0], arg.update[1])
         except:
             print('You have to give two values [ID, MODIFIED TEXT]')
 
     elif(arg.delete):
-        deleteUsingID(arg.delete)
+        delete_using_id(arg.delete)
 
     elif(arg.read_tags):
-        readTags()
+        read_tags()
 
     elif(arg.update_tag):
         try:
-            updateTag(arg.update_tag[0], arg.update_tag[1])
+            update_tag(arg.update_tag[0], arg.update_tag[1])
         except:
             print('You have to give two values [ID, MODIFIED TAG]')
 
@@ -280,14 +280,14 @@ def argumentParser():
             print('You have to give two values [REMINDER TEXT, "DATE(dd-mm-yyyy) TIME(hh:ss)"]')
 
     elif(arg.read_clean):
-        readClean()
+        read_clean()
 
     elif(arg.search_using_tags):
-        searchUsingTags(arg.search_using_tags)
+        search_using_tags(arg.search_using_tags)
 
     else:
         print('Reading Data from Database..')
-        readFromDB()
+        read_from_db()
 
 
 # def addNote(note):
