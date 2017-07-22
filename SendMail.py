@@ -15,7 +15,7 @@ def send_mail(Message):
 	server.ehlo()
 	server.starttls()
 	server.login(username, password.decode('utf-8'))
-	server.send_mail(fadd,tadd,msg)
+	server.sendmail(fadd,tadd,msg)
 	server.close()
 
 with open(os.path.dirname(os.path.abspath(__file__)) + '/Schedules.txt','r') as outFile:
