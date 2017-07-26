@@ -9,7 +9,7 @@
 # `tags` VARCHAR(200)
 # );
 
-import argparse, pathlib, time, os, pymysql
+import argparse, time, os, pymysql
 
 # Config
 DB_TABLE = 'notes'
@@ -288,18 +288,6 @@ def argumentParser():
     else:
         print('Reading Data from Database..')
         read_from_db()
-
-
-# def addNote(note):
-    # notesFile = pathlib.Path(os.path.expandvars('.notes.txt'))
-    # # notesFile = pathlib.Path(os.path.expandvars(os.getenv("HOME") + '/.notes.txt'))
-    # # check of file exists
-    # if notesFile:
-    #     with open(str(notesFile), 'a+') as File:
-    #         currentDateAndTime = time.ctime()
-    #         File.write(currentDateAndTime + '\n')
-    #         File.write(note + '\n')
-    #         File.write('\n')
 
 if __name__ == '__main__':
     argumentParser()

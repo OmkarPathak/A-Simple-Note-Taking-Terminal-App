@@ -13,9 +13,8 @@ A simple terminal note taking application using Python
 
 # Requirements:
 
-* For database connectivity, I have used `pymysql` Python module. This module is not a built-in and hence
-you have to download it from the PyPI. Execute the following command to install pymysql:<br />
-`pip3 install pymysql`
+* Execute the following command to install the required third party libraries:<br />
+`pip3 install -r requirements.txt`
 
 * For sending emails you will need the built-in `smtplib`
 
