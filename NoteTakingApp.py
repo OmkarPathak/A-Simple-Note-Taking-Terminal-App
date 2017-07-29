@@ -1,25 +1,42 @@
 # Author: OMKAR PATHAK
+from __future__ import print_function
 
-# install pymysql: pip3 install pymysql
-# CREATE TABLE `mytable` (
-# `id` INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-# `created` TIMESTAMP DEFAULT '0000-00-00 00:00:00',
-# `updated` TIMESTAMP DEFAULT now() ON UPDATE now(),
-# `note` VARCHAR(255),
-# `tags` VARCHAR(200)
-# );
-
-import argparse, time, os, pymysql
+import argparse
+import time 
+import os
+import os.path
 
 # Config
 DB_TABLE = 'notes'
 DB_HOST = 'localhost'
 DB_USER = 'omkar'
 DB_PASSWORD = '8149omkar'
+DATABASE_TYPE = 'sqlite' # valid values: 'mysql', 'sqlite'
+
+def get_database_connection():
+    if DATABASE_TYPE=='mysql':
+        import pymysql
+        return pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
+    elif DATABASE_TYPE=='sqlite':
+        import sqlite3
+        sqlite_file = 'notes.db'
+        file_exists = os.path.isfile(sqlite_file)
+        conn = sqlite3.connect(sqlite_file)
+        if not file_exists:
+            create_sqlite_tables(conn)
+        return conn
+    else:
+        raise Exception("Undefined database type!")
+
+def create_sqlite_tables(conn):
+    cursor = conn.cursor()
+    with open('schema_sqlite.sql', 'r') as schema_file:
+        cursor.execute(schema_file.read())
+    conn.commit()
 
 def insert_into_db(note, tags):
     # Open database connection
-    connection = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
+    connection = get_database_connection()
     # prepare a cursor object using cursor() method
     cursor = connection.cursor()
     # Prepare SQL query to INSERT a record into the database.
@@ -38,7 +55,7 @@ def insert_into_db(note, tags):
 
 def read_from_db():
     # Open database connection
-    connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
+    connect = get_database_connection()
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to SELECT all records from the database.
@@ -70,7 +87,7 @@ def read_from_db():
 
 def modify_data(idx, modifiedNote):
     # Open database connection
-    connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
+    connect = get_database_connection()
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to UPDATE records from the database.
@@ -91,7 +108,7 @@ def modify_data(idx, modifiedNote):
 
 def delete_using_id(idx):
     # Open database connection
-    connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
+    connect = get_database_connection()
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to UPDATE records from the database.
@@ -112,7 +129,7 @@ def delete_using_id(idx):
 
 def read_tags():
     # Open database connection
-    connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
+    connect = get_database_connection()
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to SELECT all records from the database.
@@ -135,7 +152,7 @@ def read_tags():
 
 def update_tag(idx, modifiedTag):
     # Open database connection
-    connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
+    connect = get_database_connection()
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to UPDATE records from the database.
@@ -162,7 +179,7 @@ def reminder(message, date):
 
 def read_clean():
     # Open database connection
-    connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
+    connect = get_database_connection()
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to SELECT all records from the database.
@@ -204,7 +221,7 @@ def print_data(row):
 
 def search_using_tags(pattern):
     # Open database connection
-    connect = pymysql.connect(DB_HOST, DB_USER, DB_PASSWORD, DB_TABLE)
+    connect = get_database_connection()
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to SELECT all records from the database.
