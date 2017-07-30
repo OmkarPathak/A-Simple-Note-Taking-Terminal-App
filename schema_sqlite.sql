@@ -6,3 +6,7 @@ CREATE TABLE `notes` (
   `tags` VARCHAR(200)
 );
 
+CREATE TRIGGER `triggerDate` AFTER UPDATE ON `notes`
+BEGIN
+   update `notes` SET `updated` = (strftime('%Y-%m-%d %H:%M:%S', 'now', 'localtime')) WHERE id = NEW.id;
+END;
