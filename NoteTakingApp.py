@@ -2,7 +2,7 @@
 from __future__ import print_function
 
 import argparse
-import time 
+import time
 import os
 import os.path
 
@@ -31,7 +31,7 @@ def get_database_connection():
 def create_sqlite_tables(conn):
     cursor = conn.cursor()
     with open('schema_sqlite.sql', 'r') as schema_file:
-        cursor.execute(schema_file.read())
+        cursor.executescript(schema_file.read())
     conn.commit()
 
 def insert_into_db(note, tags):
