@@ -8,8 +8,8 @@ A simple terminal note taking application using Python
 * Simple command line application.
 * Easy to install and *very* easy to use.
 * Written in simple Python. Even a beginner Python developer can contribute to this.
-* MySQL Database used, so you can easily play with it.
-* Minimum dependencies (Just need the [pymysql](https://github.com/OmkarPathak/A-Simple-Note-Taking-Terminal-App#requirements) and [CronTab](https://github.com/OmkarPathak/A-Simple-Note-Taking-Terminal-App#requirements) modules)
+* MySQL/SQLite Database used, so you can easily play with it.
+* Minimum dependencies (Just need the [pymysql](https://github.com/OmkarPathak/A-Simple-Note-Taking-Terminal-App#requirements)(if you wanna use MySQL) and [CronTab](https://github.com/OmkarPathak/A-Simple-Note-Taking-Terminal-App#requirements) modules)
 
 # Requirements:
 
@@ -25,7 +25,7 @@ A simple terminal note taking application using Python
 
 # Procedure:
 
-1. First and the most important step is to create a database for storing our notes. I have used MySQL due to its simplicity, but you can use any database you are comfortable. Just ensure to change the code accordingly. For creating our table, first make a database and then just copy and paste the following schema. This will create a table named **notes** in your database.
+1. First and the most important step is to create a database for storing our notes. I have used MySQL due to its simplicity, but you can use any database you are comfortable. Just ensure to change the code accordingly. For creating our table, first make a database and then just copy and paste the following schema. This will create a table named **notes** in your database. You can find the schema [here](https://github.com/OmkarPathak/A-Simple-Note-Taking-Terminal-App/schema_mysql.sql)
 
 ```mysql
 
@@ -38,6 +38,9 @@ CREATE TABLE `notes` (
 );
 
 ```
+<br / >
+
+If you are using SQLite, no need of manual configuration. Creation of DB and its configuration will be done automatically using the code itself.
 
 2. If you want to use the email feature, you will have to run the `ScheduleEmail.py` file (You will have to run this file only at the beginning.). This file will ask you for your password of your Email ID (Password is saved in the file `password.txt` in the encrypted form). Also, this file will set the Cron Job to check the time after every single minute. When the date and time matches the one from the Schedules.txt file, you will get a reminder in the form of mail.
 
