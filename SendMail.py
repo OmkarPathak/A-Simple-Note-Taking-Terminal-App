@@ -2,23 +2,25 @@
 import datetime
 import base64, os
 
-def send_mail(Message):
-	import smtplib
-	fadd = 'omkarpathak.comp@mmcoe.edu.in'         # sender's email address
-	tadd = 'omkarpathak.comp@mmcoe.edu.in'         # receiver's email address
-	msg = Message                                  # Message to be sent!
-	username = 'omkarpathak.comp@mmcoe.edu.in'     # Your username(email ID)
-	with open(os.path.dirname(os.path.abspath(__file__)) + '/password.txt', 'rb') as password:
-		encryptedData = password.read()
-		password = base64.b64decode(encryptedData) # Your encrypted password for above email ID
-	server = smtplib.SMTP('smtp.gmail.com', 587)
-	server.ehlo()
-	server.starttls()
-	server.login(username, password.decode('utf-8'))
-	server.sendmail(fadd,tadd,msg)
-	server.close()
 
-with open(os.path.dirname(os.path.abspath(__file__)) + '/Schedules.txt','r') as outFile:
+def send_mail(Message):
+    import smtplib
+    fadd = 'omkarpathak.comp@mmcoe.edu.in'  # sender's email address
+    tadd = 'omkarpathak.comp@mmcoe.edu.in'  # receiver's email address
+    msg = Message  # Message to be sent!
+    username = 'omkarpathak.comp@mmcoe.edu.in'  # Your username(email ID)
+    with open(os.path.dirname(os.path.abspath(__file__)) + '/password.txt', 'rb') as password:
+        encryptedData = password.read()
+        password = base64.b64decode(encryptedData)  # Your encrypted password for above email ID
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+    server.login(username, password.decode('utf-8'))
+    server.sendmail(fadd, tadd, msg)
+    server.close()
+
+
+with open(os.path.dirname(os.path.abspath(__file__)) + '/Schedules.txt', 'r') as outFile:
     result = outFile.read().split('\n')
     for results in result:
         try:

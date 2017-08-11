@@ -2,6 +2,7 @@ from crontab import CronTab
 import getpass, os
 import base64
 
+
 def set_password():
     password = getpass.getpass('Enter your Email password for sending mails: ')
     encryptedData = base64.b64encode(password.encode('utf-8'))
