@@ -8,10 +8,10 @@ import os.path
 
 # Config
 DB_TABLE = 'notes'
-DATABASE = 'notes'
-DB_HOST = 'localhost'
-DB_USER = 'omkar'
-DB_PASSWORD = '8149omkar'
+DATABASE = 'Your DATABASE name'
+DB_HOST = 'Your Host name'
+DB_USER = 'Your DATABASE username'
+DB_PASSWORD = 'Your DATABASE password'
 # PORT = 'Your Port'        # this will be needed if you use postgresql
 DATABASE_TYPE = 'sqlite'    # valid values: 'mysql', 'sqlite', 'postgresql'
 
