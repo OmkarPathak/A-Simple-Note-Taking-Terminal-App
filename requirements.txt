@@ -1,4 +1,3 @@
 crontab==0.21.3
 psycopg2==2.7.3
 PyMySQL==0.7.11
-python-decouple==3.1
