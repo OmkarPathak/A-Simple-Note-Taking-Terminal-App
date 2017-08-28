@@ -8,10 +8,10 @@ import os.path
 
 # Config
 DB_TABLE = 'notes'
-DATABASE = 'Your Database Name'
-DB_HOST = 'Your Host name'
-DB_USER = 'Your DB username'
-DB_PASSWORD = 'Your DB password'
+DATABASE = 'notes'
+DB_HOST = 'localhost'
+DB_USER = 'omkar'
+DB_PASSWORD = '8149omkar'
 # PORT = 'Your Port'        # this will be needed if you use postgresql
 DATABASE_TYPE = 'sqlite'    # valid values: 'mysql', 'sqlite', 'postgresql'
 
@@ -249,7 +249,7 @@ def reminder(message, date):
         :param message: Message to be sent as a reminder
         :param date: Date and time on which the reminder is to be sent
 
-        example: python NoteTakingApp.py --reminder '28-07-2017 07:33' 'This is how reminder is set'
+        example: python NoteTakingApp.py --reminder 'This is how reminder is set' '28-07-2017 07:33'
     '''
     with open('/home/omkarpathak/Documents/GITs/A-Simple-Note-Taking-Terminal-App/Schedules.txt', 'a') as outFile:
         outFile.write(date + ' ' + message + '\n')
