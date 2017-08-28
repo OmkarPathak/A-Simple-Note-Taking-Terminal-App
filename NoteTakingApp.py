@@ -5,20 +5,21 @@ import argparse
 import time
 import os
 import os.path
-from decouple import config
 
 # Config
 DB_TABLE = 'notes'
-DATABASE = config('DATABASE')
-DB_HOST = config('HOST')
-DB_USER = config('USER')
-# DB_PASSWORD = '8149omkar'
-DB_PASSWORD = config('PASSWORD')
-PORT = config('PORT')
-DATABASE_TYPE = config('DATABASE_TYPE')  # valid values: 'mysql', 'sqlite'
+DATABASE = 'Your Database Name'
+DB_HOST = 'Your Host name'
+DB_USER = 'Your DB username'
+DB_PASSWORD = 'Your DB password'
+# PORT = 'Your Port'        # this will be needed if you use postgresql
+DATABASE_TYPE = 'sqlite'    # valid values: 'mysql', 'sqlite', 'postgresql'
 
 
 def get_database_connection():
+    '''
+        Creates a connection between selected database
+    '''
     # if DATABASE_TYPE in ['mysql', 'postgresql', 'sqlite']:
     #     try:
     #         if
@@ -37,7 +38,6 @@ def get_database_connection():
             port=PORT
         )
         return conn
-
     elif DATABASE_TYPE == 'sqlite':
         import sqlite3
         sqlite_file = 'notes.db'
@@ -58,6 +58,14 @@ def create_sqlite_tables(conn):
 
 
 def insert_into_db(note, tags):
+    '''
+        inserts values in the database
+
+        :param note: Note to be saved into the DB in str format
+        :param tag: Tag or label to be given to the note for easy searching
+
+        example: python NoteTakingApp.py -a 'New Note' 'New Tag'
+    '''
     # Open database connection
     connection = get_database_connection()
     # prepare a cursor object using cursor() method
@@ -79,6 +87,11 @@ def insert_into_db(note, tags):
 
 
 def read_from_db():
+    '''
+        function for reading the data from the database
+
+        example: python NoteTakingApp.py -r
+    '''
     # Open database connection
     connect = get_database_connection()
     # prepare a cursor object using cursor() method
@@ -111,13 +124,21 @@ def read_from_db():
     connect.close()
 
 
-def modify_data(idx, modifiedNote):
+def modify_data(idx, modified_note):
+    '''
+        function for updating the data in the database
+
+        :param idx: id of the note to be modified
+        :param modified_note: Note to be modified in str
+
+        example: python NoteTakingApp.py -u 6 'New modified note'
+    '''
     # Open database connection
     connect = get_database_connection()
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to UPDATE records from the database.
-    updateQuery = 'UPDATE ' + DB_TABLE + ' SET note = "' + modifiedNote + '" WHERE id = ' + idx
+    updateQuery = 'UPDATE ' + DB_TABLE + ' SET note = "' + modified_note + '" WHERE id = ' + idx
     try:
         # Execute the SQL command
         cursor.execute(updateQuery)
@@ -134,6 +155,13 @@ def modify_data(idx, modifiedNote):
 
 
 def delete_using_id(idx):
+    '''
+        function for deleting the data from the database
+
+        :param idx: id of the note to be deleted
+
+        example: python NoteTakingApp.py -d 6
+    '''
     # Open database connection
     connect = get_database_connection()
     # prepare a cursor object using cursor() method
@@ -156,6 +184,11 @@ def delete_using_id(idx):
 
 
 def read_tags():
+    '''
+        function for reading all the available tags from the database
+
+        example: python NoteTakingApp.py -rt
+    '''
     # Open database connection
     connect = get_database_connection()
     # prepare a cursor object using cursor() method
@@ -179,13 +212,21 @@ def read_tags():
     connect.close()
 
 
-def update_tag(idx, modifiedTag):
+def update_tag(idx, modified_tag):
+    '''
+        function for updating a specific tag from the database
+
+        :param idx: id of the note whose tag is to be modified
+        :param modified_tag: Modified tag in str
+
+        example: python NoteTakingApp.py -ut 5 'Updated Tag'
+    '''
     # Open database connection
     connect = get_database_connection()
     # prepare a cursor object using cursor() method
     cursor = connect.cursor()
     # Prepare SQL query to UPDATE records from the database.
-    updateQuery = 'UPDATE ' + DB_TABLE + ' SET tags = "' + modifiedTag + '" WHERE id = ' + idx
+    updateQuery = 'UPDATE ' + DB_TABLE + ' SET tags = "' + modified_tag + '" WHERE id = ' + idx
     try:
         # Execute the SQL command
         cursor.execute(updateQuery)
@@ -201,14 +242,26 @@ def update_tag(idx, modifiedTag):
     connect.close()
 
 
-# function to set the reminder
 def reminder(message, date):
+    '''
+        function to set the reminder
+
+        :param message: Message to be sent as a reminder
+        :param date: Date and time on which the reminder is to be sent
+
+        example: python NoteTakingApp.py --reminder '28-07-2017 07:33' 'This is how reminder is set'
+    '''
     with open('/home/omkarpathak/Documents/GITs/A-Simple-Note-Taking-Terminal-App/Schedules.txt', 'a') as outFile:
         outFile.write(date + ' ' + message + '\n')
     print('Reminder set Successfully')
 
 
 def read_clean():
+    '''
+        function for reading notes one by one in your CLI
+
+        example: python NoteTakingApp.py -rc
+    '''
     # Open database connection
     connect = get_database_connection()
     # prepare a cursor object using cursor() method
@@ -229,8 +282,10 @@ def read_clean():
     connect.close()
 
 
-# function to generate a generator for seeing the notes
 def simple_generator(numbers):
+    '''
+        helper function to generate a generator for seeing the notes
+    '''
     i = 0
     while True:
         check = input('\nWanna see next note? (If yes, press y else n): ')
@@ -254,6 +309,11 @@ def print_data(row):
 
 
 def search_using_tags(pattern):
+    '''
+        function for searching the note using a tag
+
+        :param pattern: Pattern of the tag whose corresponding note is to be searched for
+    '''
     # Open database connection
     connect = get_database_connection()
     # prepare a cursor object using cursor() method
